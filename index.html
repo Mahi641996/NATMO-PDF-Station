@@ -19,24 +19,9 @@ header{
   border-bottom:3px solid #c40000;
 }
 
-header h2{
-  color:#c40000;
-  font-size:18px;
-  margin:0;
-}
-
-header h1{
-  color:#c40000;
-  font-size:22px;
-  margin:5px 0;
-  font-weight:700;
-}
-
-header p{
-  margin:4px 0 0;
-  font-size:14px;
-  color:#333;
-}
+header h2{ color:#c40000; font-size:18px; margin:0; }
+header h1{ color:#c40000; font-size:22px; margin:5px 0; font-weight:700; }
+header p{ margin:4px 0 0; font-size:14px; color:#333; }
 
 /* ===== CONTAINER ===== */
 .container{
@@ -48,40 +33,30 @@ header p{
   box-shadow:0 2px 8px rgba(0,0,0,0.1);
 }
 
-/* ===== TITLE ===== */
+/* ===== TITLES ===== */
 .station-title{
   text-align:center;
   font-size:20px;
   font-weight:600;
-  margin-bottom:10px;
+  margin-bottom:8px;
 }
-
 .select-title{
   text-align:center;
   margin-bottom:18px;
 }
 
-/* ===== FEATURES GRID ===== */
+/* ===== FEATURES ===== */
 .features{
   display:grid;
   grid-template-columns: repeat(6, 1fr);
   gap:14px;
 }
-
-/* First row: 3 equal buttons */
 .features button:nth-child(1),
 .features button:nth-child(2),
-.features button:nth-child(3){
-  grid-column: span 2;
-}
-
-/* Second row: 2 equal buttons */
+.features button:nth-child(3){ grid-column: span 2; }
 .features button:nth-child(4),
-.features button:nth-child(5){
-  grid-column: span 3;
-}
+.features button:nth-child(5){ grid-column: span 3; }
 
-/* Buttons */
 .features button{
   padding:16px;
   font-size:15px;
@@ -91,10 +66,7 @@ header p{
   border-radius:6px;
   cursor:pointer;
 }
-
-.features button:hover{
-  background:#092f48;
-}
+.features button:hover{ background:#092f48; }
 
 /* ===== EXECUTION PANEL ===== */
 .panel{
@@ -104,20 +76,27 @@ header p{
   border-top:2px solid #ddd;
 }
 
-.panel h3{
-  margin-bottom:12px;
+label{ font-weight:600; margin-top:10px; display:block; }
+input, select{ width:100%; padding:8px; margin-top:5px; }
+
+.file-actions{ margin-top:8px; display:none; }
+.add-btn{
+  padding:6px 12px;
+  background:#0b3c5d;
+  color:white;
+  border:none;
+  border-radius:4px;
+  cursor:pointer;
+  font-size:13px;
 }
 
-label{
-  font-weight:600;
-  display:block;
-  margin-top:10px;
-}
-
-input, select{
-  width:100%;
-  padding:8px;
-  margin-top:5px;
+ul{ list-style:none; padding:0; margin-top:10px; }
+ul li{
+  background:#eef2f5;
+  padding:6px 10px;
+  margin-bottom:5px;
+  border-radius:4px;
+  cursor:move;
 }
 
 .execute-btn{
@@ -129,10 +108,6 @@ input, select{
   border-radius:5px;
   font-size:15px;
   cursor:pointer;
-}
-
-.execute-btn:hover{
-  background:#a30000;
 }
 
 /* ===== FOOTER ===== */
@@ -147,48 +122,64 @@ footer{
 
 <body>
 
-<!-- ===== HEADER ===== -->
 <header>
   <h2>राष्ट्रीय एटलस एवं थीमैटिक मानचित्रण संगठन</h2>
   <h1>National Atlas & Thematic Mapping Organisation</h1>
   <p>Government of India (Department of Science & Technology)</p>
 </header>
 
-<!-- ===== MAIN ===== -->
 <div class="container">
 
-  <div class="station-title">NATMO PDF STATION</div>
+  <div class="station-title">NATMO PDF Station</div>
   <div class="select-title">Select Required Operation</div>
 
-  <!-- FEATURE BUTTONS -->
   <div class="features">
     <button onclick="showPanel('merge')">✔ Merge PDF</button>
-    <button onclick="showPanel('split')">✔ Split PDF (Multi-Range)</button>
+    <button onclick="showPanel('split')">✔ Split PDF</button>
     <button onclick="showPanel('delete')">✔ Delete Pages</button>
     <button onclick="showPanel('rotate')">✔ Rotate / Flip Pages</button>
     <button onclick="showPanel('img2pdf')">✔ JPG / PNG → PDF</button>
   </div>
 
-  <!-- EXECUTION PANEL -->
   <div class="panel" id="panel">
     <h3 id="panelTitle"></h3>
 
     <label>Select File(s)</label>
     <input type="file" id="fileInput" multiple accept=".pdf,.jpg,.jpeg,.png">
 
+    <!-- ADD MORE FILES (ONLY FOR MERGE & IMG2PDF) -->
+    <div class="file-actions" id="addMoreBox">
+      <button class="add-btn" onclick="addMoreFiles()">➕ Add More Files</button>
+    </div>
+
+    <ul id="fileList"></ul>
+
     <div id="rangeBox" style="display:none;">
-      <label>Page Range (e.g. 3-6, 10-13)</label>
+      <label>Page Number / Range (e.g. 2 or 2-4 or 3,5)</label>
       <input type="text" id="ranges">
     </div>
 
     <div id="rotateBox" style="display:none;">
       <label>Rotation / Flip Option</label>
       <select id="rotateOption">
-        <option value="90">Rotate 90° Clockwise</option>
+        <option value="90">Rotate 90°</option>
         <option value="180">Rotate 180°</option>
         <option value="270">Rotate 270°</option>
         <option value="flipH">Flip Horizontal</option>
         <option value="flipV">Flip Vertical</option>
+      </select>
+    </div>
+
+    <div id="imagePdfBox" style="display:none;">
+      <label>Page Size</label>
+      <select id="pageSize">
+        <option value="A4">A4</option>
+        <option value="Letter">Letter</option>
+      </select>
+      <label>Orientation</label>
+      <select id="orientation">
+        <option value="portrait">Portrait</option>
+        <option value="landscape">Landscape</option>
       </select>
     </div>
 
@@ -197,11 +188,9 @@ footer{
 
 </div>
 
-<!-- ===== FOOTER ===== -->
 <footer>
-  Developed for official use at NATMO<br>
   © 2025 National Atlas & Thematic Mapping Organisation, Kolkata<br>
-  Develop By: <b>Sk Mujibar Rahaman</b>, Research Assistant
+  Developer Name: <b>Sk Mujibar Rahaman</b>, Research Assistant
 </footer>
 
 <script src="pdf-lib.min.js"></script>
@@ -209,34 +198,48 @@ footer{
 <script src="app.js"></script>
 
 <script>
-let currentAction = "";
+let currentAction="";
+
+function resetInputs(){
+  document.getElementById("fileInput").value="";
+  document.getElementById("fileList").innerHTML="";
+  document.getElementById("ranges").value="";
+  document.getElementById("addMoreBox").style.display="none";
+  if (typeof selectedFiles!=="undefined") selectedFiles.length=0;
+}
 
 function showPanel(action){
-  currentAction = action;
-  document.getElementById("panel").style.display = "block";
+  resetInputs();
+  currentAction=action;
+  document.getElementById("panel").style.display="block";
 
   document.getElementById("rangeBox").style.display =
-    (action === "split" || action === "delete") ? "block" : "none";
-
+    (action==="split"||action==="delete")?"block":"none";
   document.getElementById("rotateBox").style.display =
-    (action === "rotate") ? "block" : "none";
+    (action==="rotate")?"block":"none";
+  document.getElementById("imagePdfBox").style.display =
+    (action==="img2pdf")?"block":"none";
 
-  const titles = {
-    merge: "Merge PDF Files",
-    split: "Split PDF (Multiple Ranges)",
-    delete: "Delete Pages from PDF",
-    rotate: "Rotate or Flip PDF Pages",
-    img2pdf: "Convert Images to PDF"
+  const titles={
+    merge:"Merge PDF Files",
+    split:"Split PDF Pages",
+    delete:"Delete PDF Pages",
+    rotate:"Rotate or Flip PDF Pages",
+    img2pdf:"Convert Images to PDF"
   };
-  document.getElementById("panelTitle").innerText = titles[action];
+  document.getElementById("panelTitle").innerText=titles[action];
+}
+
+function addMoreFiles(){
+  document.getElementById("fileInput").click();
 }
 
 function runAction(){
-  if(currentAction === "merge") mergePDF();
-  if(currentAction === "split") splitPDF();
-  if(currentAction === "delete") deletePages();
-  if(currentAction === "rotate") rotatePages();
-  if(currentAction === "img2pdf") imagesToPdf();
+  if(currentAction==="merge") mergePDF();
+  if(currentAction==="split") splitPDF();
+  if(currentAction==="delete") deletePages();
+  if(currentAction==="rotate") rotatePages();
+  if(currentAction==="img2pdf") imagesToPdf();
 }
 </script>
 
