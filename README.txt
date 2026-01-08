@@ -1,8 +1,4 @@
-# NATMO PDF Station
-
-An offline, desktop-only PDF utility developed for internal use at  
-**National Atlas & Thematic Mapping Organisation (NATMO)**  
-Department of Science & Technology, Government of India.
+# Offline PDF Station
 
 ## Features
 - Merge PDF files
@@ -23,8 +19,6 @@ Department of Science & Technology, Government of India.
 
 ## Developer
 **Sk Mujibar Rahaman**  
-Research Assistant  
-NATMO, Kolkata
 
 ## License
-For official and academic use only.
+For Personal use only.
